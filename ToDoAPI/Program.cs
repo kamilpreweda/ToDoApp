@@ -25,6 +25,7 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(opts =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("Authentication:SecretKey")))
     };
 });
+builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("Deafult"));
 
 var app = builder.Build();
 
@@ -40,6 +41,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapHealthChecks("/health").AllowAnonymous();
 app.MapControllers();
+
 
 app.Run();
