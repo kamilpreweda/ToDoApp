@@ -5,7 +5,7 @@ using Dapper;
 
 namespace ToDoLibrary.DataAccess;
 
-public class SqlDataAccess
+public class SqlDataAccess : ISqlDataAccess
 {
     private readonly IConfiguration _config;
 
