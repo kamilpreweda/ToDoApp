@@ -22,5 +22,16 @@ namespace ToDoLibrary.DataAccess
                 new { AssignedTo = assignedTo },
                 "Default");
         }
+
+        public async Task<ToDoModel?> GetOneAssigned(int assignedTo, int toDoId)
+        {
+            var results = await _sql.LoadData<ToDoModel, dynamic>(
+                "dbo.spToDos_GetOneAssigned",
+                new { AssignedTo = assignedTo, ToDoId = toDoId },
+                "Default");
+            return results.FirstOrDefault();
+        }
+
+
     }
 }
