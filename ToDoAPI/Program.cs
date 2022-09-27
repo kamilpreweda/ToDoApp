@@ -7,8 +7,10 @@ using ToDoAPI.StartupConfig;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.AddServices();
-
+builder.AddHealthCheckServices();
+builder.AddAuthServices();
+builder.AddStandardServices();
+builder.AddCustomServices();
 
 var app = builder.Build();
 

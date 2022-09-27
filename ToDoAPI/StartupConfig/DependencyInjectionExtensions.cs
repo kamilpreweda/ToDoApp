@@ -6,14 +6,14 @@ using ToDoLibrary.DataAccess;
 namespace ToDoAPI.StartupConfig
 {
     public static class DependencyInjectionExtensions
-    {
-        public static void AddServices(this WebApplicationBuilder builder)
+    {      
+        public static void AddHealthCheckServices(this WebApplicationBuilder builder)
         {
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
-            builder.Services.AddSingleton<IToDoData, ToDoData>();
+            builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("Deafult"));
+        }
+
+        public static void AddAuthServices(this WebApplicationBuilder builder)
+        {
             builder.Services.AddAuthorization(opts =>
             {
                 opts.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -30,7 +30,19 @@ namespace ToDoAPI.StartupConfig
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("Authentication:SecretKey")))
                 };
             });
-            builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("Deafult"));
+        }
+
+        public static void AddStandardServices(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+        }
+
+        public static void AddCustomServices(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
+            builder.Services.AddSingleton<IToDoData, ToDoData>();
         }
     }
 }
