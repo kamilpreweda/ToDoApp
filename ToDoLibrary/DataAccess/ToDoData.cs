@@ -44,10 +44,17 @@ namespace ToDoLibrary.DataAccess
         public Task UpdateTask(int assignedTo, int toDoId, string task)
         {
             return _sql.SaveData<dynamic>(
-                "dbo.spToDos_Create",
+                "dbo.spToDos_UpdateTask",
                 new { AssignedTo = assignedTo, ToDoId = toDoId, Task = task },
                 "Default");            
         }
 
+        public Task CompleteToDo(int assignedTo, int toDoId)
+        {
+            return _sql.SaveData<dynamic>(
+                "dbo.spToDos_CompleteToDo",
+                new { AssignedTo = assignedTo, ToDoId = toDoId },
+                "Default");
+        }
     }
 }
