@@ -32,6 +32,14 @@ namespace ToDoLibrary.DataAccess
             return results.FirstOrDefault();
         }
 
+        public async Task<ToDoModel?> Create(int assignedTo, string task)
+        {
+            var results = await _sql.LoadData<ToDoModel, dynamic>(
+                "dbo.spToDos_Create",
+                new { AssignedTo = assignedTo, Task = task },
+                "Default");
+            return results.FirstOrDefault();
+        }
 
     }
 }
