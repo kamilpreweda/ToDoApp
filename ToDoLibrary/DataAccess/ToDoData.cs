@@ -41,5 +41,13 @@ namespace ToDoLibrary.DataAccess
             return results.FirstOrDefault();
         }
 
+        public Task UpdateTask(int assignedTo, int toDoId, string task)
+        {
+            return _sql.SaveData<dynamic>(
+                "dbo.spToDos_Create",
+                new { AssignedTo = assignedTo, ToDoId = toDoId, Task = task },
+                "Default");            
+        }
+
     }
 }
