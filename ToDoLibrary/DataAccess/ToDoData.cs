@@ -56,5 +56,13 @@ namespace ToDoLibrary.DataAccess
                 new { AssignedTo = assignedTo, ToDoId = toDoId },
                 "Default");
         }
+
+        public Task Delete(int assignedTo, int toDoId)
+        {
+            return _sql.SaveData<dynamic>(
+                "dbo.spToDos_Delete",
+                new { AssignedTo = assignedTo, ToDoId = toDoId},
+                "Default");
+        }
     }
 }
