@@ -7,7 +7,7 @@ using ToDoLibrary.Models;
 
 namespace ToDoLibrary.DataAccess
 {
-    public class ToDoData
+    public class ToDoData : IToDoData
     {
         private readonly ISqlDataAccess _sql;
 
@@ -15,7 +15,7 @@ namespace ToDoLibrary.DataAccess
         {
             _sql = sql;
         }
-        public Task <List<ToDoModel>> GetAllAssigned(int assignedTo)
+        public Task<List<ToDoModel>> GetAllAssigned(int assignedTo)
         {
             return _sql.LoadData<ToDoModel, dynamic>(
                 "dbp.spToDos_GetAllAssigned",
@@ -46,7 +46,7 @@ namespace ToDoLibrary.DataAccess
             return _sql.SaveData<dynamic>(
                 "dbo.spToDos_UpdateTask",
                 new { AssignedTo = assignedTo, ToDoId = toDoId, Task = task },
-                "Default");            
+                "Default");
         }
 
         public Task CompleteToDo(int assignedTo, int toDoId)
@@ -61,7 +61,7 @@ namespace ToDoLibrary.DataAccess
         {
             return _sql.SaveData<dynamic>(
                 "dbo.spToDos_Delete",
-                new { AssignedTo = assignedTo, ToDoId = toDoId},
+                new { AssignedTo = assignedTo, ToDoId = toDoId },
                 "Default");
         }
     }
