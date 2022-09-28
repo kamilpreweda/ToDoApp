@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using ToDoLibrary.DataAccess;
 using ToDoLibrary.Models;
 
@@ -8,17 +9,25 @@ namespace ToDoAPI.Controllers;
 [ApiController]
 public class ToDosController : ControllerBase
 {
-    private readonly IToDoData _data;
+    private readonly IToDoData _data;    
 
     public ToDosController(IToDoData data)
     {
-        _data = data;
+        _data = data;        
+    }
+
+    private int GetUserId()
+    {
+        var userIdText = User.Claims.FirstOrDefault(c =>
+            c.Type == ClaimTypes.NameIdentifier)?.Value;
+        return int.Parse(userIdText);
     }
     // GET: api/ToDos
     [HttpGet]
-    public ActionResult<IEnumerable<ToDoModel>> Get()
+    public async Task<ActionResult<IEnumerable<ToDoModel>>> Get()
     {
-        throw new NotImplementedException();
+        var output = await _data.GetAllAssigned(GetUserId());
+        return Ok(output);
     }
 
     // GET api/<ToDos/5
