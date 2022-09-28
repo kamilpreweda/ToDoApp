@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ToDoLibrary.DataAccess;
 using ToDoLibrary.Models;
 
 namespace ToDoAPI.Controllers;
@@ -7,6 +8,12 @@ namespace ToDoAPI.Controllers;
 [ApiController]
 public class ToDosController : ControllerBase
 {
+    private readonly IToDoData _data;
+
+    public ToDosController(IToDoData data)
+    {
+        _data = data;
+    }
     // GET: api/ToDos
     [HttpGet]
     public ActionResult<IEnumerable<ToDoModel>> Get()
