@@ -18,7 +18,7 @@ namespace ToDoLibrary.DataAccess
         public Task<List<ToDoModel>> GetAllAssigned(int assignedTo)
         {
             return _sql.LoadData<ToDoModel, dynamic>(
-                "dbp.spToDos_GetAllAssigned",
+                "dbo.spToDos_GetAllAssigned",
                 new { AssignedTo = assignedTo },
                 "Default");
         }
