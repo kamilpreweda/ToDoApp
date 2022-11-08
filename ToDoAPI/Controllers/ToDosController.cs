@@ -10,9 +10,9 @@ namespace ToDoAPI.Controllers;
 public class ToDosController : ControllerBase
 {
     private readonly IToDoData _data;
-    private readonly ILogger _logger;
+    private readonly ILogger<ToDosController> _logger;
 
-    public ToDosController(IToDoData data, ILogger logger)
+    public ToDosController(IToDoData data, ILogger<ToDosController> logger)
     {
         _data = data;
         _logger = logger;

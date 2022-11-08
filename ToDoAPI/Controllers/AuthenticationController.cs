@@ -24,7 +24,7 @@ public class AuthenticationController : ControllerBase
     [HttpPost("token")]
     [AllowAnonymous]
     public ActionResult<string> Authenticate([FromBody]AuthenticationData data)
-    {
+    {        
         var user = ValidateCredentials(data);
         if(user is null)
         {
