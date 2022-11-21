@@ -25,7 +25,7 @@ public class ToDosController : ControllerBase
         return int.Parse(userIdText);
     }
     // GET: api/ToDos
-    [HttpGet]
+    [HttpGet(Name ="GetAllTodos")]
     public async Task<ActionResult<List<ToDoModel>>> Get()
     {
         _logger.LogInformation("GET: api/ToDos");
@@ -42,7 +42,7 @@ public class ToDosController : ControllerBase
     }
 
     // GET api/ToDos/5
-    [HttpGet("{todoId}")]
+    [HttpGet("{todoId}" ,Name="GetOneTodo")]
     public async Task<ActionResult<ToDoModel>> Get(int todoId)
     {
         _logger.LogInformation("GET: api/ToDos/{ToDoId}", todoId);
@@ -63,7 +63,7 @@ public class ToDosController : ControllerBase
     }
 
     // POST api/ToDos
-    [HttpPost]
+    [HttpPost(Name ="CreateTodo")]
     public async Task<ActionResult<ToDoModel>> Post([FromBody] string task)
     {
         _logger.LogInformation("POST: api/ToDos (Task: {Task})", task);
@@ -80,7 +80,7 @@ public class ToDosController : ControllerBase
     }
 
     // PUT api/ToDos/5
-    [HttpPut("{todoId}")]
+    [HttpPut("{todoId}", Name ="UpdateTodoTask")]
     public async Task<IActionResult> Put(int todoId, [FromBody] string task)
     {
         _logger.LogInformation("PUT: api/ToDos/{ToDoId} (Task: {Task})", todoId, task);
@@ -97,7 +97,7 @@ public class ToDosController : ControllerBase
     }
 
     // PUT api/Todos/5/Complete
-    [HttpPut("{todoId}/Complete")]
+    [HttpPut("{todoId}/Complete", Name ="CompleteTodo")]
     public async Task<IActionResult> Complete(int todoId)
     {
         _logger.LogInformation("PUT: api/ToDos/{ToDoId}/Complete failed.", todoId);
@@ -114,7 +114,7 @@ public class ToDosController : ControllerBase
     }
 
     // DELETE api/<ToDos/5
-    [HttpDelete("{todoId}")]
+    [HttpDelete("{todoId}", Name ="DeleteTodo")]
     public async Task<IActionResult> Delete(int todoId)
     {
         _logger.LogInformation("DELETE: api/ToDos/{ToDoId} failed.", todoId);
